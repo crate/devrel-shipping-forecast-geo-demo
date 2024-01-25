@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CrateDB Spatial Example application: Shipping Forecast Regions</title>
+  <link rel="stylesheet" href="/css/bulma.min.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script type="text/javascript" src="/js/fontawesome.js"></script>
+</head>
+
+<body>
+  <section class="hero has-background-info is-bold">
+    <div class="hero-body">
+      <div class="container is-flex is-vcentered">
+        <img src="/images/logo.png" alt="Simon Prickett Logo" class="logo mr-4"
+          height="48" width="48">
+        <h1 class="title has-text-white">
+          CrateDB Spatial Example: Shipping Forecast Regions
+        </h1>
+      </div>
+    </div>
+  </section>
+  <main class="container mt-4">
+    <div class="tile is-ancestor">
+      <div class="tile is-vertical is-8">
+        <div id="mapid"></div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-vertical">
+          <div class="box has-text-centered">
+            <button id="searchBtn" class="button is-success is-medium mb-4"><span>Search</span><span
+                class="icon is-small"><i class="fas fa-search"></i></span></button>
+            <button id="resetBtn" class="button is-danger is-medium mb-4"><span>Reset</span><span
+                class="icon is-small"><i class="fas fa-times"></i></span></button>
+          </div>
+          <section id="infoPanel" class="section is-hidden">
+            <h1 id="regionName" class="title">Details</h1>
+            <hr/>
+            <div id="regionData" class="content">
+              <p>Hover over a region...</p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>CrateDB Spatial Demo Application</strong> by <a href="https://simonprickett.dev">Simon Prickett</a>. An example
+        application using <a href="https://cratedb.com/">CrateDB</a>, <a href="https://expressjs.com/">Express</a>
+        and <a href="https://bulma.io/">Bulma</a>.
+      </p>
+      <p><a href="https://TODO">Source code is available on
+          GitHub</a>.</p>
+    </div>
+  </footer>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script defer src="/js/app.js"></script>
+</body>

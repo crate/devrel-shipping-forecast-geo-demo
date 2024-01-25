@@ -15,3 +15,12 @@
   border-radius: 0.5rem;
   box-shadow: 3px 1px 8px #a5050563;
 }
+
+footer > div > p { a:link, a:visited, a:hover, a:active {
+  color: #ffffff;
+  text-decoration: underline;
+}}
+
+p > strong {
+  color: #ffffff;
+}

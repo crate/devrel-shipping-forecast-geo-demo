@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/simonprickett/cratedb-demo/issues"
   },
-  "homepage": "https://github.com/simonprickett/cratedb-demo#readme"
+  "homepage": "https://github.com/simonprickett/cratedb-demo#readme",
+  "engines": {
+    "node": ">=18"
+  }
 }

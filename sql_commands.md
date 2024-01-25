@@ -10,6 +10,8 @@ CREATE TABLE shipping_forecast.regions(
   )
 );
 
+TODO convert WKT data to GeoJSON here...
+
 INSERT INTO shipping_forecast.regions (
   id, name, boundaries, forecast
 ) VALUES (
@@ -354,8 +356,17 @@ INSERT INTO shipping_forecast.regions (
   }
 );
 
+Which region is a given point in? TODO make this use GeoJSON...
 
- 
+SELECT * FROM shipping_forecast.regions WHERE within('POINT(-11.909179687500002 49.781264058178344)', boundaries) LIMIT 1; 
+
+Which regions intersect with a given polygon? TODO make this use GeoJSON...
+
+SELECT * FROM shipping_forecast.regions WHERE intersects('POLYGON((-3.383789 57.704147,4.086914 60.326948,8.745117 55.478853,1.977539 51.013755,-3.383789 57.704147))', boundaries);
+
+Which regions will I pass through on my charted course from Brighton to Immingham? TODO make this use GeoJSON...
+
+SELECT * from shipping_forecast.regions WHERE intersects('LINESTRING(-0.15380859375000003 50.77815527465925, 0.11707305908203126 50.65381404795095, 0.9956359863281251 50.73819338460293, 1.6328430175781252 51.14834033402121, 1.7097473144531252 51.71001238595862, 1.9651794433593752 52.37559917665913, 1.8113708496093752 52.985030365232305, 0.674285888671875 53.512551306362596, 0.015106201171875002 53.58109212828818, -0.17200469970703128 53.63649628489509)', boundaries);
 
 
 

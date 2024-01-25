@@ -360,6 +360,7 @@ Which region is a given point in? TODO make this use GeoJSON...
 
 SELECT * FROM shipping_forecast.regions WHERE within('POINT(-11.909179687500002 49.781264058178344)', boundaries) LIMIT 1; 
 
+
 Which regions intersect with a given polygon? TODO make this use GeoJSON...
 
 SELECT * FROM shipping_forecast.regions WHERE intersects('POLYGON((-3.383789 57.704147,4.086914 60.326948,8.745117 55.478853,1.977539 51.013755,-3.383789 57.704147))', boundaries);

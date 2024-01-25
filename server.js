@@ -24,31 +24,29 @@ app.get('/', async (req, res) => {
 // Expects the body to be a GeoJSON representation:
 // https://en.wikipedia.org/wiki/GeoJSON
 app.post('/search', async (req, res) => {
+  let results = [];
+
   // Let's see what sort of request this is...
   if (req.body.point) {
     // Simple point.
     const wktString = `POINT(${req.body.point.lng} ${req.body.point.lat})`;
-    const results = await crate.execute(
+    results = await crate.execute(
       'SELECT name, boundaries, forecast from shipping_forecast.regions WHERE WITHIN(?, boundaries) LIMIT 1',
       [ wktString ]
     );
-
-    console.log(JSON.stringify(results));
   } else if (req.body.polygon) {
     // User supplied a search polygon.
     const wktString = wellknown.stringify(req.body.polygon);
-    const results = await crate.execute(
+    results = await crate.execute(
       'SELECT * FROM shipping_forecast.regions WHERE INTERSECTS(?, boundaries)',
       [ wktString ]
     );
-
-    console.log(JSON.stringify(results));
   }
 
   // TODO what about line string type?
 
   return res.json({
-    todo: 'Need to write this!'
+    data: results.json
   });
 });
 

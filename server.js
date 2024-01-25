@@ -28,22 +28,21 @@ app.post('/search', async (req, res) => {
   if (req.body.point) {
     // Simple point.
     const wktString = `POINT(${req.body.point.lng} ${req.body.point.lat})`;
+    const results = await crate.execute(
+      'SELECT name, boundaries, forecast from shipping_forecast.regions WHERE WITHIN(?, boundaries) LIMIT 1',
+      [ wktString ]
+    );
 
-    try {
-      const results = await crate.execute(
-        'SELECT name, boundaries, forecast from shipping_forecast.regions WHERE WITHIN(?, boundaries) LIMIT 1',
-        [ wktString ]
-      );
-
-      console.log(JSON.stringify(results));
-    } catch(e) {
-      console.log(e);
-    }
+    console.log(JSON.stringify(results));
   } else if (req.body.polygon) {
     // User supplied a search polygon.
     const wktString = wellknown.stringify(req.body.polygon);
-    console.log(`SELECT * FROM shipping_forecast.regions WHERE INTERSECTS('${wktString}', boundaries);`);
-    // TODO run the query...
+    const results = await crate.execute(
+      'SELECT * FROM shipping_forecast.regions WHERE INTERSECTS(?, boundaries)',
+      [ wktString ]
+    );
+
+    console.log(JSON.stringify(results));
   }
 
   // TODO what about line string type?

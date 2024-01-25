@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import crate from 'node-crate';
+import wellknown from 'wellknown';
 
 const { PORT, CRATE_URL } = process.env;
 

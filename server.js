@@ -20,39 +20,36 @@ app.get('/', async (req, res) => {
   return res.render('homepage');
 });
 
-// Perform a polygon search and return the results.
-// Expects the body to be a GeoJSON representation:
-// https://en.wikipedia.org/wiki/GeoJSON
+// Perform a geospatial search and return the results.
 app.post('/search', async (req, res) => {
-  let results = [];
+  try {
+    let results;
+    
+    // Let's see what sort of request this is...
+    if (req.body.point) {
+      // Simple point.
+      const wktString = `POINT(${req.body.point.lng} ${req.body.point.lat})`;
+      results = await crate.execute(
+        'SELECT name, boundaries, forecast from shipping_forecast.regions WHERE WITHIN(?, boundaries) LIMIT 1',
+        [ wktString ]
+      );
+    } else if (req.body.shape) {
+      // User supplied a shape (polygon or polyine)
+      // Expects the body to be a GeoJSON representation:
+      // https://en.wikipedia.org/wiki/GeoJSON
+      const wktString = wellknown.stringify(req.body.shape);
+      results = await crate.execute(
+        'SELECT * FROM shipping_forecast.regions WHERE INTERSECTS(?, boundaries)',
+        [ wktString ]
+      );
+    }
 
-  // Let's see what sort of request this is...
-  if (req.body.point) {
-    // Simple point.
-    const wktString = `POINT(${req.body.point.lng} ${req.body.point.lat})`;
-    results = await crate.execute(
-      'SELECT name, boundaries, forecast from shipping_forecast.regions WHERE WITHIN(?, boundaries) LIMIT 1',
-      [ wktString ]
-    );
-  } else if (req.body.polygon) {
-    // User supplied a search polygon.
-    const wktString = wellknown.stringify(req.body.polygon);
-    results = await crate.execute(
-      'SELECT * FROM shipping_forecast.regions WHERE INTERSECTS(?, boundaries)',
-      [ wktString ]
-    );
-  } else if (req.body.polyLine) {
-    // User supplied a polyline path.
-    const wktString = wellknown.stringify(req.body.polyLine);
-    results = await crate.execute(
-      'SELECT * FROM shipping_forecast.regions WHERE INTERSECTS(?, boundaries)',
-      [ wktString ]
-    );
+    return res.json({ data: results.json });
+  } catch (e) {
+    // Probably an unparsable polygon.
+    console.error(e);
+    return res.json({ data: [] });
   }
-
-  return res.json({
-    data: results.json
-  });
 });
 
 // Start the Express server.

@@ -8,22 +8,48 @@ const redIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
+const MODE_LINE = 0;
+const MODE_POLYGON = 1;
+
 const searchBtn = document.getElementById('searchBtn');
 const resetBtn = document.getElementById('resetBtn');
+const polygonBtn = document.getElementById('polyBtn');
+const lineBtn = document.getElementById('lineBtn');
 
-const allBtns = [ searchBtn, resetBtn ];
+const searchBtns = [ searchBtn, resetBtn ];
+const modeBtns = [ polygonBtn, lineBtn ];
 
 // Initialize the buttons.
-allBtns.map((b) => b.disabled = true);
+searchBtns.map((b) => b.disabled = true);
+
+// Set polygon to be the initial mode and hide mode buttons.
+polygonBtn.classList.add('is-light');
 
 let currentMarkers = [];
+let currentMode = MODE_LINE;
 let searchResultPolygons = [];
-let currentPolygon = null;
+let currentShape = null;
+
+polygonBtn.onclick = function () {
+  // Toggle state.
+  polygonBtn.classList.remove('is-light');
+  lineBtn.classList.add('is-light');
+  currentMode = MODE_POLYGON;
+  updatePath();
+};
+
+lineBtn.onclick = function () {
+  // Toggle state.
+  lineBtn.classList.remove('is-light');
+  polygonBtn.classList.add('is-light');
+  currentMode = MODE_LINE;
+  updatePath();
+};
 
 resetBtn.onclick = function () {
-  if (currentPolygon) {
-    myMap.removeLayer(currentPolygon);
-    currentPolygon = null;
+  if (currentShape) {
+    myMap.removeLayer(currentShape);
+    currentShape = null;
   }
 
   for (const marker of currentMarkers) {
@@ -36,7 +62,11 @@ resetBtn.onclick = function () {
 
   currentMarkers = [];
   searchResultPolygons = [];
-  allBtns.map((b) => b.disabled = true);
+  searchBtns.map((b) => b.disabled = true);
+  currentMode = MODE_LINE;
+  lineBtn.classList.remove('is-light');
+  polygonBtn.classList.add('is-light');
+  modeBtns.map((b) => b.classList.add('is-hidden'));
 
   // Hide info panel.
   document.getElementById('infoPanel').classList.add('is-hidden');
@@ -61,8 +91,8 @@ searchBtn.onclick = async function () {
     // Do we have a polygon or a point to search with?
     const searchRequestBody = {};
 
-    if (currentPolygon) {
-      searchRequestBody.polygon = currentPolygon.toGeoJSON();
+    if (currentShape) {
+      searchRequestBody.shape = currentShape.toGeoJSON();
     } else {
       // Get the position of the first and only marker.
       searchRequestBody.point = { 
@@ -130,21 +160,32 @@ searchBtn.onclick = async function () {
   searchBtn.classList.remove('is-loading');
 }
 
-function updatePolygon() {
-  if (currentMarkers.length > 2) {
-    const polyCoords = currentMarkers.map((marker) => [ 
+function updatePath() {
+  if (currentMarkers.length > 1) {
+    const shapeCoords = currentMarkers.map((marker) => [ 
       marker.getLatLng().lat, 
       marker.getLatLng().lng 
     ]);
 
-    if (currentPolygon) {
-      myMap.removeLayer(currentPolygon);
+    if (currentShape) {
+      myMap.removeLayer(currentShape);
     }
     
-    currentPolygon = L.polygon(polyCoords, {color: 'red', weight: 2, fill: true, stroke: false}).addTo(myMap);
+    if (currentMode === MODE_POLYGON) {
+      currentShape = L.polygon(shapeCoords, {color: 'red', weight: 2, fill: true, stroke: false}).addTo(myMap);
+    } else {
+      currentShape = L.polyline(shapeCoords, {color: 'red', weight: 2}).addTo(myMap);
+    }
+
+    // Turn on the mode buttons.
+    modeBtns.map((b) => b.classList.remove('is-hidden'));
   }
 
-  if (currentMarkers.length === 1 || currentMarkers.length > 2) {
+  // Can we enable search?  Yes for a single point (1 marker), 
+  // yes for 3 or more points in polygon mode and 
+  // yes for 2 or more points in line mode.
+  // Otherwise no.
+  if (currentMarkers.length == 1 || (currentMarkers.length > 2 && currentMode == MODE_POLYGON) || (currentMarkers.length > 1 && currentMode == MODE_LINE)) {
     searchBtn.disabled = false;
   } else {
     searchBtn.disabled = true;
@@ -166,9 +207,9 @@ myMap.on('click', (e) => {
   });
 
   newMarker.addTo(myMap);
-  newMarker.on('move', () => updatePolygon());
+  newMarker.on('move', () => updatePath());
   currentMarkers.push(newMarker);  
-  updatePolygon();
+  updatePath();
 
   resetBtn.disabled = false;
 });

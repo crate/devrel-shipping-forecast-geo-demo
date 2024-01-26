@@ -41,9 +41,14 @@ app.post('/search', async (req, res) => {
       'SELECT * FROM shipping_forecast.regions WHERE INTERSECTS(?, boundaries)',
       [ wktString ]
     );
+  } else if (req.body.polyLine) {
+    // User supplied a polyline path.
+    const wktString = wellknown.stringify(req.body.polyLine);
+    results = await crate.execute(
+      'SELECT * FROM shipping_forecast.regions WHERE INTERSECTS(?, boundaries)',
+      [ wktString ]
+    );
   }
-
-  // TODO what about line string type?
 
   return res.json({
     data: results.json

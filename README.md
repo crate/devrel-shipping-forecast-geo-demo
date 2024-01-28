@@ -1,6 +1,6 @@
 # CrateDB / Express Spatial Data Demo
 
-If you just want to try this in the cloud without installing it locally, [click here](https://crate-db-demo-rvrdm4exfq-ew.a.run.app/).
+If you just want to try this in the cloud without installing it locally, head over to [shippingforecast.simonprickett.dev](https://shippingforecast.simonprickett.dev/).
 
 ## Getting Started
 

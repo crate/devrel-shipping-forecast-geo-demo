@@ -1,25 +1,33 @@
-# CrateDB / Express spatial data demo
+# CrateDB / Express Spatial Data Demo
 
+## Getting Started
 
-## Walkthrough
+Start a local instance of CrateDB with Docker.
 
-Start services.
 ```shell
 docker-compose up
 ```
 
-Provision database.
+Create the required database schema and load the sample data.
+
 ```shell
 crash --host 'http://localhost:4200' < init.sql
 ```
 
-Navigate to CrateDB Admin.
-```shell
-open http://localhost:4200/
-```
+Install the Node/Express application dependencies.
 
-Start Express application.
 ```shell
 npm install
+```
+
+Start the application.
+
+```shell
 npm run dev
+```
+
+Navigate to CrateDB Admin to explore the database schema and sample data.
+
+```shell
+open http://localhost:4200/
 ```

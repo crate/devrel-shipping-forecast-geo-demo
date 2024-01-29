@@ -1,6 +1,10 @@
 # CrateDB / Express Spatial Data Demo
 
-This is a quick demo showing geospatial functionalityu in CrateDB.  Click on the map to drop a marker then hit search to find out which Shipping Forecast region your marker is in.  Add more markers to plot a course or draw a polygon then hit search to see which regions you're traversing.
+This is a quick demo showing geospatial functionality in [CrateDB](https://cratedb.com/).  Click on the map to drop a marker in the waters around the British Isles then hit search to find out which [Shipping Forecast](https://en.wikipedia.org/wiki/Shipping_Forecast) region your marker is in.  
+
+Add more markers to plot a course or draw a polygon then hit search again to see which regions you're traversing.  
+
+Hover over a region to see the shipping forecast for it (data isn't real time, so don't use this to plan a voyage)!
 
 ![Demo showing an example polygon search](shippingforecast.gif)
 

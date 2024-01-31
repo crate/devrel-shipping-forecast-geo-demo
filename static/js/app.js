@@ -95,10 +95,7 @@ searchBtn.onclick = async function () {
       searchRequestBody.shape = currentShape.toGeoJSON();
     } else {
       // Get the position of the first and only marker.
-      searchRequestBody.point = { 
-        lat: currentMarkers[0].getLatLng().lat, 
-        lng: currentMarkers[0].getLatLng().lng
-      };
+      searchRequestBody.point = currentMarkers[0].toGeoJSON();
     };
 
     // Call the search endpoint.

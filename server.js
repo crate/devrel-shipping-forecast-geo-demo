@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
 import crate from 'node-crate';
-import wellknown from 'wellknown';
 
 const { PORT, CRATE_URL } = process.env;
 
@@ -27,20 +26,18 @@ app.post('/search', async (req, res) => {
     
     // Let's see what sort of request this is...
     if (req.body.point) {
-      // Simple point.
-      const wktString = `POINT(${req.body.point.lng} ${req.body.point.lat})`;
+      // Simple point, use a WITHIN query.
       results = await crate.execute(
         'SELECT name, boundaries, forecast from shipping_forecast.regions WHERE WITHIN(?, boundaries) LIMIT 1',
-        [ wktString ]
+        [ req.body.point.geometry ]
       );
     } else if (req.body.shape) {
       // User supplied a shape (polygon or polyine)
       // Expects the body to be a GeoJSON representation:
       // https://en.wikipedia.org/wiki/GeoJSON
-      const wktString = wellknown.stringify(req.body.shape);
       results = await crate.execute(
         'SELECT * FROM shipping_forecast.regions WHERE INTERSECTS(?, boundaries)',
-        [ wktString ]
+        [ req.body.shape.geometry ]
       );
     }
 

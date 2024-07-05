@@ -10,8 +10,6 @@ Hover over a region to see the shipping forecast for it (data isn't real time, s
 
 ![Demo showing an example polygon search](shippingforecast.gif)
 
-If you just want to try this in the cloud without installing it locally, head over to [shippingforecast.simonprickett.dev](https://shippingforecast.simonprickett.dev/).
-
 ## Prerequisites
 
 You'll need to install the following to try this project locally:

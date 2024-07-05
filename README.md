@@ -27,8 +27,8 @@ Begin by cloning the source code repository from GitHub onto your local machine 
 Be sure to change directory into the newly created `cratedb-demo` folder afterwards.
 
 ```shell 
-git clone https://github.com/simonprickett/cratedb-demo.git
-cd cratedb-demo
+git clone https://github.com/crate/devrel-shipping-forecast-geo-demo.git
+cd devrel-shipping-forecast-geo-demo
 ```
 
 The application keeps a couple of configurable values in an environment file.  Create a file called `.env` by copying the example file provided:

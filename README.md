@@ -42,7 +42,7 @@ You shouldn't need to change any of the default values in this file.
 Next, start a local instance of CrateDB with Docker.
 
 ```shell
-docker-compose up -d
+docker compose up -d
 ```
 
 Once the Docker container is up and running your next steps are to create the required database schema and load the sample data.
@@ -94,7 +94,7 @@ To stop the application, press `Ctrl-C`.
 Stop the container running CrateDB like so:
 
 ```
-docker-compose down
+docker compose down
 ```
 
 ## Optional: Extra Configuration

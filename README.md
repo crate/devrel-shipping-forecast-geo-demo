@@ -106,4 +106,6 @@ The application has two configurable parameters.  Their values are stored in the
 
 ## CrateDB Academy
 
-Want to learn more about CrateDB, including its geospatial capabilities?  Take our free online "CrateDB Fundamentals" course, available now at the [CrateDB Academy](https://learn.cratedb.com).
+Want to learn more about CrateDB, including its geospatial capabilities?
+Take our free online "CrateDB Fundamentals" course, available now at the
+[CrateDB Academy](https://learn.cratedb.com).

@@ -103,3 +103,9 @@ The application has two configurable parameters.  Their values are stored in the
 
 * `PORT` - the port number that the front end runs on.  This defaults to 3000, change it if you'd like to use another port.
 * `CRATE_URL` - the URL that the application uses to connect to CrateDB.  This defaults to `http://localhost:4200`.  If you'd like to use the cloud version of CrateDB, sign up here then change the URL value to point to your cloud instance, supplying your username and password.  Example URL format: ```https://USER_NAME:PASSWORD@CLOUD_HOST_NAME:4200```.
+
+## CrateDB Academy
+
+Want to learn more about CrateDB, including its geospatial capabilities?
+Take our free online "CrateDB Fundamentals" course, available now at the
+[CrateDB Academy](https://learn.cratedb.com).

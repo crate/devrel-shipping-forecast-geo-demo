@@ -21,12 +21,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/simonprickett/cratedb-demo.git"
+    "url": "git+https://github.com/crate/devrel-shipping-forecast-geo-demo.git"
   },
   "bugs": {
-    "url": "https://github.com/simonprickett/cratedb-demo/issues"
+    "url": "https://github.com/crate/devrel-shipping-forecast-geo-demo/issues"
   },
-  "homepage": "https://github.com/simonprickett/cratedb-demo#readme",
+  "homepage": "https://github.com/crate/devrel-shipping-forecast-geo-demo#readme",
   "engines": {
     "node": ">=18"
   }
